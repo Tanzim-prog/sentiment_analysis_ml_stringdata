@@ -1,5 +1,7 @@
 import json
+import joblib
 import numpy as np
+import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, precision_score, recall_score, f1_score
@@ -58,3 +60,10 @@ print(classification_report(y_test, y_pred))
 # Generate a confusion matrix
 print("Confusion Matrix:")
 print(confusion_matrix(y_test, y_pred))
+
+# Assuming 'model' is your trained model
+model_file_path = 'D:/AIUB/Sentiment Analysis Research/Models/sentiment_model_zero.pkl'
+
+# Save the model to disk
+joblib.dump(model, model_file_path)
+print(f"Model saved to {model_file_path}")

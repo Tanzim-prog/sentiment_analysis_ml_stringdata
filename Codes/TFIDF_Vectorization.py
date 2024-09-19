@@ -1,10 +1,11 @@
 import json
+import joblib
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 # Step 1: Load the Lemmatized Dataset
 file_path = 'D:/AIUB/Sentiment Analysis Research/Data Sets/Lemmatized Hotel Reviews.xlsx'  # Replace with your file path
-lemmatized_reviews = pd.read_excel(file_path)
+lemmatized_reviews = pd.read_excel(file_path, sheet_name = 1)
 
 # Step 2: Apply TF-IDF Vectorization
 # Initialize the TF-IDF Vectorizer
@@ -12,6 +13,12 @@ tfidf_vectorizer = TfidfVectorizer()
 
 # Assuming the relevant column with lemmatized text is named 'Lemmatized'
 tfidf_matrix = tfidf_vectorizer.fit_transform(lemmatized_reviews['Lemmatized Reviews'])
+
+# Save the TF-IDF vectorizer for later use
+vectorizer_file_path = 'D:/AIUB/Sentiment Analysis Research/Models/Ascott The Residence Dhaka tfidf_vectorizer.pkl'
+joblib.dump(tfidf_vectorizer, vectorizer_file_path)
+
+print(f"TF-IDF Vectorizer saved to {vectorizer_file_path}")
 
 # Convert the TF-IDF matrix to an array
 tfidf_array = tfidf_matrix.toarray()
@@ -31,7 +38,7 @@ for doc_index in range(tfidf_array.shape[0]):
 tfidf_json = json.dumps(tfidf_data, indent=4)
 
 # Step 4: Save the JSON Data to a File
-json_file_path = 'D:/AIUB/Sentiment Analysis Research/JSON/TFIDF Hotel Reviews.json'  # Replace with your desired save path
+json_file_path = 'D:/AIUB/Sentiment Analysis Research/JSON/TFIDF Ascott The Residence Dhaka Hotel Reviews.json'  # Replace with your desired save path
 with open(json_file_path, 'w') as json_file:
     json_file.write(tfidf_json)
 
